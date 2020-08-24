@@ -44,26 +44,24 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Hello</p>
+        <p>Recap</p>
       </header>
-      <p>This example shows you the contents of the selected part of your display.
-Click the Start Capture button to begin.</p>
+      <p><a href="/about/">About</a></p>
 
       <p>
-        <button id="enable" onClick={enableMicrophone}>Enable Microphone/Audio</button>
+        <button id="enable" onClick={enableMicrophone}>Enable Microphone</button>
         <button id="disable" onClick={disableMicrophone}>Disable Microphone</button>
       </p>
       <p>
-        <button id="enableScr" onClick={enableScreenCap}>Enable Screen</button>
-        <button id="disableScr" onClick={disableScreenCap}>Disable Screen</button>
+        <button id="enableScr" onClick={enableScreenCap}>Enable Screen Capture</button>
+        <button id="disableScr" onClick={disableScreenCap}>Disable Screen Capture</button>
       </p>
       <p>
-        <button id="start" onClick={startCapture}>Start Capture</button>
-        <button id="stop" onClick={stopCapture}>Stop Capture</button>
+        <button id="start" onClick={startCapture}>Start Recording</button>
+        <button id="stop" onClick={stopCapture}>Stop Recording</button>
       </p>
       <p>
       <button id="download" onClick={download}>Download</button>
-      <button id="upload" >Upload</button>
       <input type="text" value={filename} onChange={(evt) => {setFilename(evt.target.value)}}/>
       </p>
 
