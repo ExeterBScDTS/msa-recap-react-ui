@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { enableMicrophone, disableMicrophone, startAudioCapture, stopAudioCapture, downloadAudioCapture } from '../audio_capture';
 import {  startScreenCapture, stopScreenCapture, enableScreenCap, disableScreenCap, downloadScreenCapture } from '../capture';
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const logArray = Array(<></>);
 
@@ -39,14 +39,6 @@ function Home() {
 
   return (
     <div className="App">
-    <header className="App-header">
-      <p>Recap</p>
-    </header>
-    <p>
-    <Link  to="/about">
-          About
-        </Link>
-    </p>
     <p>
       <button id="enable" onClick={enableMicrophone}>Enable Microphone</button>
       <button id="disable" onClick={disableMicrophone}>Disable Microphone</button>
