@@ -1,7 +1,7 @@
 // See https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API/Using_Screen_Capture
 // for the original version of this code with detailed explanation.
 
-export { enableScreenCap, disableScreenCap, startScreenCapture, stopScreenCapture, downloadScreenCapture };
+export { enableScreenCap, disableScreenCap, startScreenCapture, pauseScreenCapture, stopScreenCapture, downloadScreenCapture };
 
 // Options for getDisplayMedia()
 
@@ -76,10 +76,21 @@ function downloadScreenCapture(filename) {
     window.URL.revokeObjectURL(url);
 }
 
+function pauseScreenCapture() {
+    if (mediaRecorder) {
+        if(mediaRecorder.state === "recording"){
+            console.info("Screen recording paused")
+            mediaRecorder.pause();
+        }
+    }
+}
+
 function stopScreenCapture() {
     if (mediaRecorder) {
-        mediaRecorder.requestData();
-        mediaRecorder.stop();
+        if(mediaRecorder.state !== "inactive"){
+            mediaRecorder.requestData();
+            mediaRecorder.stop();
+        }
     }
 }
 

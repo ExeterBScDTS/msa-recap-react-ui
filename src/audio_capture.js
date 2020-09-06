@@ -1,5 +1,5 @@
 
-export { enableMicrophone, disableMicrophone, startAudioCapture, stopAudioCapture, downloadAudioCapture };
+export { enableMicrophone, disableMicrophone, startAudioCapture, pauseAudioCapture, stopAudioCapture, downloadAudioCapture };
 
 
 let mediaOptions = {
@@ -64,11 +64,21 @@ function downloadAudioCapture(filename) {
     window.URL.revokeObjectURL(url);
 }
 
+function pauseAudioCapture() {
+    if (mediaRecorder) {
+        if(mediaRecorder.state === "recording"){
+            console.info("Audio recording paused")
+            mediaRecorder.pause();
+        }
+    }
+}
 
 function stopAudioCapture() {
     if (mediaRecorder) {
-        mediaRecorder.requestData();
-        mediaRecorder.stop();
+        if(mediaRecorder.state !== "inactive"){
+            mediaRecorder.requestData();
+            mediaRecorder.stop();
+        }
     }
 }
 

@@ -1,31 +1,26 @@
 import React from "react";
 import { useState } from "react";
-import { enableMicrophone, disableMicrophone, startAudioCapture, stopAudioCapture, downloadAudioCapture } from '../audio_capture';
-import {  startScreenCapture, stopScreenCapture, enableScreenCap, disableScreenCap, downloadScreenCapture } from '../capture';
+import { enableMicrophone, disableMicrophone, startAudioCapture, stopAudioCapture, downloadAudioCapture, pauseAudioCapture } from '../audio_capture';
+import { startScreenCapture, stopScreenCapture, enableScreenCap, disableScreenCap, downloadScreenCapture, pauseScreenCapture } from '../capture';
 import { withRouter } from "react-router-dom";
 
 const logArray = Array(<></>);
 
 function Home() {
 
-    const [filename, setFilename] = useState("recording");
+  const [filename, setFilename] = useState("recording");
 
-    let startCapture = () => {
-        startAudioCapture();
-        startScreenCapture();
-      }
-    
-      let stopCapture = () => {
-        stopAudioCapture();
-        stopScreenCapture();
-      }
-    
-      function download(){
-        downloadScreenCapture(filename);
-        downloadAudioCapture(filename);
-      }
+  let startCapture = () => {
+    startAudioCapture();
+    startScreenCapture();
+  }
 
-      const [log, setLog] = useState(<></>);
+  function download() {
+    downloadScreenCapture(filename);
+    downloadAudioCapture(filename);
+  }
+
+  const [log, setLog] = useState(<></>);
 
   let updateLog = (cl: string, msg: string) => {
     logArray.push(<span className={cl}>{msg}<br></br></span>);
@@ -37,34 +32,56 @@ function Home() {
   console.warn = (msg: any) => updateLog("warn", msg);
   console.info = (msg: any) => updateLog("info", msg);
 
+  let enableRecording = () => {
+    enableMicrophone();
+    enableScreenCap();
+  }
+
+  let pauseRecording = () => {
+    pauseAudioCapture();
+    pauseScreenCapture();
+  }
+
+  let endRecording = () => {
+    stopAudioCapture();
+    stopScreenCapture();
+    disableMicrophone();
+    disableScreenCap();
+  }
+
   return (
     <div className="App">
-    <p>
-      <button id="enable" onClick={enableMicrophone}>Enable Microphone</button>
-      <button id="disable" onClick={disableMicrophone}>Disable Microphone</button>
-    </p>
-    <p>
-      <button id="enableScr" onClick={enableScreenCap}>Enable Screen Capture</button>
-      <button id="disableScr" onClick={disableScreenCap}>Disable Screen Capture</button>
-    </p>
-    <p>
-      <button id="start" onClick={startCapture}>Start Recording</button>
-      <button id="stop" onClick={stopCapture}>Stop Recording</button>
-    </p>
-    <p>
-    <button id="download" onClick={download}>Download</button>
-    <input type="text" value={filename} onChange={(evt) => {setFilename(evt.target.value)}}/>
-    </p>
 
-    <video controls muted id="video" autoPlay></video>
-    <br></br>
+      <hr></hr>
 
-    <strong>Log:</strong>
-    <div style={{textAlign:'left'}}>
-    <br></br>
-    <pre>{log}</pre>
+      <p>
+        <button id="enableRecording" onClick={enableRecording}>Enable Recording</button>
+      </p>
+      <p>
+        <button id="start" onClick={startCapture}>Start Recording</button>
+        <button id="pause" onClick={pauseRecording}>Pause Recording</button>
+      </p>
+
+      <p>
+        <button id="endRecording" onClick={endRecording}>End Recording</button>
+      </p>
+
+      <p>
+        <button id="download" onClick={download}>Download</button>
+        <input type="text" value={filename} onChange={(evt) => { setFilename(evt.target.value) }} />
+      </p>
+
+      <hr></hr>
+
+      <video controls muted id="video" autoPlay></video>
+      <br></br>
+
+      <strong>Log:</strong>
+      <div style={{ textAlign: 'left' }}>
+        <br></br>
+        <pre>{log}</pre>
+      </div>
     </div>
-  </div>
   );
 }
 
