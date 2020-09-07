@@ -1,7 +1,8 @@
 // See https://developer.mozilla.org/en-US/docs/Web/API/Screen_Capture_API/Using_Screen_Capture
 // for the original version of this code with detailed explanation.
 
-export { enableScreenCap, disableScreenCap, startScreenCapture, pauseScreenCapture, stopScreenCapture, downloadScreenCapture };
+export { enableScreenCap, disableScreenCap, startScreenCapture, pauseScreenCapture, 
+    stopScreenCapture, downloadScreenCapture, getCaptureBlob };
 
 // Options for getDisplayMedia()
 
@@ -61,20 +62,6 @@ function startScreenCapture() {
     }
 }
 
-function downloadScreenCapture(filename) {
-    let data = chunks;
-    let screen_capture = new Blob(data, {
-        type: "video/webm"
-    });
-    let url = URL.createObjectURL(screen_capture);
-    let a = document.createElement("a");
-    document.body.appendChild(a);
-    a.style = "display: none";
-    a.href = url;
-    a.download = filename + ".webm";
-    a.click();
-    window.URL.revokeObjectURL(url);
-}
 
 function pauseScreenCapture() {
     if (mediaRecorder) {
@@ -102,4 +89,26 @@ function dumpOptionsInfo() {
     console.info(JSON.stringify(videoTrack.getSettings(), null, 2));
     console.info("Track constraints:");
     console.info(JSON.stringify(videoTrack.getConstraints(), null, 2));
+}
+
+function downloadScreenCapture(filename) {
+    let data = chunks;
+    let screen_capture = new Blob(data, {
+        type: "video/webm"
+    });
+    let url = URL.createObjectURL(screen_capture);
+    let a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    a.href = url;
+    a.download = filename + ".webm";
+    a.click();
+    window.URL.revokeObjectURL(url);
+}
+
+function getCaptureBlob(){
+    let screen_capture = new Blob(chunks, {
+        type: "video/webm"
+    });
+    return screen_capture;
 }

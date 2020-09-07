@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { enableMicrophone, disableMicrophone, startAudioCapture, stopAudioCapture, downloadAudioCapture, pauseAudioCapture } from '../audio_capture';
-import { startScreenCapture, stopScreenCapture, enableScreenCap, disableScreenCap, downloadScreenCapture, pauseScreenCapture } from '../capture';
+import { enableMicrophone, disableMicrophone, startAudioCapture, stopAudioCapture, downloadAudioCapture, pauseAudioCapture } from "../audio_capture";
+import { startScreenCapture, stopScreenCapture, enableScreenCap, disableScreenCap, downloadScreenCapture, pauseScreenCapture } from "../capture";
+import { uploadBlob } from "../azure_upload";
 import { withRouter } from "react-router-dom";
 
-const logArray = Array(<></>);
+// const logArray = Array(<></>);
 
 function Home() {
 
@@ -20,6 +21,9 @@ function Home() {
     downloadAudioCapture(filename);
   }
 
+  let log = '';
+
+  /*
   const [log, setLog] = useState(<></>);
 
   let updateLog = (cl: string, msg: string) => {
@@ -31,6 +35,7 @@ function Home() {
   console.error = (msg: any) => updateLog("error", msg);
   console.warn = (msg: any) => updateLog("warn", msg);
   console.info = (msg: any) => updateLog("info", msg);
+  */
 
   let enableRecording = () => {
     enableMicrophone();
@@ -47,6 +52,14 @@ function Home() {
     stopScreenCapture();
     disableMicrophone();
     disableScreenCap();
+  }
+
+  let upload = () =>
+  {
+    console.info("Calling upload()");
+    uploadBlob().then((m)=> {
+    console.warn("Upload message", m);
+    });
   }
 
   return (
@@ -71,6 +84,9 @@ function Home() {
         <input type="text" value={filename} onChange={(evt) => { setFilename(evt.target.value) }} />
       </p>
 
+      <p>
+        <button id="upload" onClick={upload}>Upload</button>
+      </p>
       <hr></hr>
 
       <video controls muted id="video" autoPlay></video>
