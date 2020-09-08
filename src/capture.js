@@ -4,6 +4,7 @@
 export { enableScreenCap, disableScreenCap, startScreenCapture, pauseScreenCapture, 
     stopScreenCapture, downloadScreenCapture, getCaptureBlob };
 
+
 // Options for getDisplayMedia()
 
 var displayMediaOptions = {
@@ -70,6 +71,7 @@ function pauseScreenCapture() {
             mediaRecorder.pause();
         }
     }
+
 }
 
 function stopScreenCapture() {
@@ -78,6 +80,7 @@ function stopScreenCapture() {
             mediaRecorder.requestData();
             mediaRecorder.stop();
         }
+
     }
 }
 
@@ -90,6 +93,7 @@ function dumpOptionsInfo() {
     console.info("Track constraints:");
     console.info(JSON.stringify(videoTrack.getConstraints(), null, 2));
 }
+
 
 function downloadScreenCapture(filename) {
     let data = chunks;
@@ -112,3 +116,4 @@ function getCaptureBlob(){
     });
     return screen_capture;
 }
+

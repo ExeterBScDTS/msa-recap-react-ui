@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+
 import {
   enableMicrophone, disableMicrophone, startAudioCapture, stopAudioCapture,
   downloadAudioCapture, pauseAudioCapture, getAudioCaptureBlob
@@ -31,6 +32,7 @@ function Home() {
 
   /*
   const [log, setLog] = useState(<></>);
+
 
   let updateLog = (cl: string, msg: string) => {
     logArray.push(<span className={cl}>{msg}<br></br></span>);
@@ -119,6 +121,7 @@ function Home() {
         <pre>{log}</pre>
       </div>
     </div>
+
   );
 }
 

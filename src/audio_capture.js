@@ -80,9 +80,9 @@ function stopAudioCapture() {
             mediaRecorder.requestData();
             mediaRecorder.stop();
         }
+
     }
 }
-
 
 function getAudioCaptureBlob(){
     let audio_capture = new Blob(chunks, {
@@ -90,3 +90,4 @@ function getAudioCaptureBlob(){
     });
     return audio_capture;
 }
+
