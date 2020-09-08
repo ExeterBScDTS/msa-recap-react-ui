@@ -1,5 +1,6 @@
 
-export { enableMicrophone, disableMicrophone, startAudioCapture, pauseAudioCapture, stopAudioCapture, downloadAudioCapture };
+export { enableMicrophone, disableMicrophone, startAudioCapture, pauseAudioCapture, 
+    stopAudioCapture, downloadAudioCapture, getAudioCaptureBlob };
 
 
 let mediaOptions = {
@@ -83,3 +84,9 @@ function stopAudioCapture() {
 }
 
 
+function getAudioCaptureBlob(){
+    let audio_capture = new Blob(chunks, {
+        type: "video/ogg"
+    });
+    return audio_capture;
+}

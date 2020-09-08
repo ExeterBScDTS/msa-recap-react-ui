@@ -1,8 +1,14 @@
 import React from "react";
 import { useState } from "react";
-import { enableMicrophone, disableMicrophone, startAudioCapture, stopAudioCapture, downloadAudioCapture, pauseAudioCapture } from "../audio_capture";
-import { startScreenCapture, stopScreenCapture, enableScreenCap, disableScreenCap, downloadScreenCapture, pauseScreenCapture } from "../capture";
-import { uploadBlob } from "../azure_upload";
+import {
+  enableMicrophone, disableMicrophone, startAudioCapture, stopAudioCapture,
+  downloadAudioCapture, pauseAudioCapture, getAudioCaptureBlob
+} from "../audio_capture";
+import {
+  startScreenCapture, stopScreenCapture, enableScreenCap, disableScreenCap,
+  downloadScreenCapture, pauseScreenCapture, getCaptureBlob
+} from "../capture";
+import { projectName, uploadBlob } from "../azure_upload";
 import { withRouter } from "react-router-dom";
 
 // const logArray = Array(<></>);
@@ -54,12 +60,26 @@ function Home() {
     disableScreenCap();
   }
 
-  let upload = () =>
-  {
-    console.info("Calling upload()");
-    uploadBlob().then((m)=> {
-    console.warn("Upload message", m);
-    });
+  let project = '';
+
+  let upload = () => {
+
+    projectName().then((name)=>{
+      project = name;
+    console.log("project", project)
+
+    if (project) {
+      console.info("Calling upload()");
+      let ablob: Blob = getAudioCaptureBlob();
+      uploadBlob(ablob, project, "ogg").then((m) => {
+        console.warn("Upload message", m);
+      });
+      let vblob: Blob = getCaptureBlob();
+      uploadBlob(vblob, project, "webm").then((m) => {
+        console.warn("Upload message", m);
+      });
+    }
+  });
   }
 
   return (
@@ -86,6 +106,7 @@ function Home() {
 
       <p>
         <button id="upload" onClick={upload}>Upload</button>
+        <span>{project}</span>
       </p>
       <hr></hr>
 
