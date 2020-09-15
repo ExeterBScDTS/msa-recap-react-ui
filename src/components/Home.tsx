@@ -143,6 +143,7 @@ function Home() {
 
       <hr></hr>
 
+      <p>Hello ECM3440</p>
       <p>
         <button id="enableRecording" disabled={disabled.enable} onClick={enableRecording}>Enable Recording</button>
       </p>
