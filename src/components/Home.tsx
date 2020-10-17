@@ -155,7 +155,7 @@ function Home() {
       </p>
       <hr></hr>
 
-      <video controls muted id="video" autoPlay></video>
+      <video controls id="video" autoPlay></video>
       <br></br>
 
       <p>
