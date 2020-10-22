@@ -37,6 +37,7 @@ In the react web app root folder add a proxy entry to ```package.json```. See
 ```json
 "scripts": {
     "start": "react-scripts start",
+    "test": "react-scripts test",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
   },
